@@ -1,0 +1,31 @@
+{% extends 'job_offer/base.html' %}
+{% block container %}
+
+  <main class="container mt-3">
+    <section>
+      <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>{{ header.title }}</strong></h1>
+      <p class="text-center pt-1">{{ сompanies.count }} компаний</p>
+      <div class="row mt-5">
+        <div class="col-12 col-lg-8 offset-lg-2 m-auto">
+
+          {% for company_data in companies %}
+          <div class="card mb-4">
+            <div class="card-body px-5">
+              <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <a href="{% url 'company' company_data.id %}"><img class="ml-4" style="float: right; clear: both" src="{{ company_data.logo }}" width="230" height="130" alt=""></a>
+                    <a href="{% url 'company' company_data.id %}"><h2 class="h2 pb-2">{{ company_data.name }}</h2></a>
+                    <p class="mb-2 ">{{ company_data.location }} • {{ company_data.employee_count }} сотрудников</p>
+                    <a href="{% url 'company' company_data.id %}"><p>{{ company_data.vacancies.count }} вакансий</p></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+{% endblock %}
