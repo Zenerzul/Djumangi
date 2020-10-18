@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 import os
-import django
-os.environ['DJANGO_SETTINGS_MODULE'] = 'conf.settings'
-django.setup()
 
+import django
 
 from job_offer.data import vacancies, companies, specialties
 from job_offer.models import Company, Vacancy, Specialty
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'conf.settings'
+django.setup()
+
 
 if __name__ == '__main__':
     for company_data in companies:

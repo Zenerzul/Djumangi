@@ -37,12 +37,16 @@ class AllCompaniesView(View):
 
 class VacancyBySpecialisationView(View):
     def get(self, request, specialization):
-        sorted_vacancies = Vacancy.objects.filter(cat__code=specialization)
-        header = Specialty.objects.get(code=specialization)
-        return render(request, 'job_offer/vacancies.html', context={
-            'vacancies': sorted_vacancies,
-            'header': header,
-        })
+        try:
+            sorted_vacancies = Vacancy.objects.filter(cat__code=specialization)
+            header = Specialty.objects.get(code=specialization)
+            return render(request, 'job_offer/vacancies.html', context={
+                'vacancies': sorted_vacancies,
+                'header': header,
+            })
+        except Specialty.DoesNotExist:
+            raise Http404
+
 
 
 class VacancyView(View):
