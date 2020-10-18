@@ -18,7 +18,7 @@ class MainView(View):
 class AllVacanciesView(View):
     def get(self, request):
         all_vacancies = Vacancy.objects.all()
-        header = "Все вакансии"
+        header = 'Все вакансии'
         return render(request, 'job_offer/vacancies.html', context={
             'vacancies': all_vacancies,
             'header': header
@@ -28,7 +28,7 @@ class AllVacanciesView(View):
 class AllCompaniesView(View):
     def get(self, request):
         all_companies = Company.objects.all()
-        header = "Компании"
+        header = 'Компании'
         return render(request, 'job_offer/companies.html', context={
             'companies': all_companies,
             'header': header
