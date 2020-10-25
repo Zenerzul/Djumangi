@@ -1,16 +1,21 @@
 #!/usr/bin/env python
+import datetime
 import os
-
 import django
-
-from job_offer.data import vacancies, companies, specialties
-from job_offer.models import Company, Vacancy, Specialty
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'conf.settings'
 django.setup()
 
 
+from job_offer.data import vacancies, companies, specialties
+from job_offer.models import Company, Vacancy, Specialty
+
+
 if __name__ == '__main__':
+    Specialty.objects.all().delete()
+    Company.objects.all().delete()
+    Vacancy.objects.all().delete()
+
     for company_data in companies:
         company = Company.objects.create(**company_data)
 

@@ -25,21 +25,21 @@ vacancies = [
 
 companies = [
     {'name': 'workiro', 'location': 'Токио', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 15000, 'logo': '/static/logo1.png'},
+     'employee_count': 15000},
     {'name': 'rebelrage', 'location': 'Лондон', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 3000, 'logo': '/static/logo2.png'},
+     'employee_count': 3000},
     {'name': 'staffingsmarter', 'location': 'Барселона', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 16000, 'logo': '/static/logo3.png'},
+     'employee_count': 16000},
     {'name': 'evilthreath', 'location': 'Милан', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 11000, 'logo': '/static/logo4.png'},
+     'employee_count': 11000},
     {'name': 'hirey', 'location': 'Москва', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 20000, 'logo': '/static/logo5.png'},
+     'employee_count': 2000},
     {'name': 'swiftattack', 'location': 'Нью Йорк', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 12500, 'logo': '/static/logo6.png'},
+     'employee_count': 12500},
     {'name': 'troller', 'location': 'Копенгаген', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 7000, 'logo': '/static/logo7.png'},
+     'employee_count': 7000},
     {'name': 'primalassault', 'location': 'Варшава', 'description': 'Лучшие вакансии ждут Ваших резюме!',
-     'employee_count': 10000, 'logo': '/static/logo8.png'}
+     'employee_count': 10000}
 ]
 
 
@@ -47,12 +47,12 @@ companies = [
 
 
 specialties = [
-    {'code': 'frontend', 'title': 'Фронтенд', 'picture': '/static/specialties/specty_frontend.png'},
-    {'code': 'backend', 'title': 'Бэкенд', 'picture': '/static/specialties/specty_backend.png'},
-    {'code': 'gamedev', 'title': 'Геймдев', 'picture': '/static/specialties/specty_gamedev.png'},
-    {'code': 'devops', 'title': 'Девопс', 'picture': '/static/specialties/specty_devops.png'},
-    {'code': 'design', 'title': 'Дизайн', 'picture': '/static/specialties/specty_design.png'},
-    {'code': 'products', 'title': 'Продукты', 'picture': '/static/specialties/specty_products.png'},
-    {'code': 'management', 'title': 'Менеджмент', 'picture': '/static/specialties/specty_management.png'},
-    {'code': 'testing', 'title': 'Тестирование', 'picture': '/static/specialties/specty_testing.png'}
+    {'code': 'frontend', 'title': 'Фронтенд'},
+    {'code': 'backend', 'title': 'Бэкенд'},
+    {'code': 'gamedev', 'title': 'Геймдев'},
+    {'code': 'devops', 'title': 'Девопс'},
+    {'code': 'design', 'title': 'Дизайн'},
+    {'code': 'products', 'title': 'Продукты'},
+    {'code': 'management', 'title': 'Менеджмент'},
+    {'code': 'testing', 'title': 'Тестирование'}
 ]

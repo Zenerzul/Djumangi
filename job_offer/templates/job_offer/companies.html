@@ -8,15 +8,15 @@
       <div class="row mt-5">
         <div class="col-12 col-lg-8 offset-lg-2 m-auto">
 
-          {% for company_data in companies %}
+          {% for company in companies %}
           <div class="card mb-4">
             <div class="card-body px-5">
               <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
-                    <a href="{% url 'company' company_data.id %}"><img class="ml-4" style="float: right; clear: both" src="{{ company_data.logo }}" width="230" height="130" alt=""></a>
-                    <a href="{% url 'company' company_data.id %}"><h2 class="h2 pb-2">{{ company_data.name }}</h2></a>
-                    <p class="mb-2 ">{{ company_data.location }} • {{ company_data.employee_count }} сотрудников</p>
-                    <a href="{% url 'company' company_data.id %}"><p>{{ company_data.vacancies.count }} вакансий</p></a>
+                    <a href="{% url 'company' company.id %}"><img class="ml-4" style="float: right; clear: both" src="{{ company.logo.url }}" width="230" height="130" alt=""></a>
+                    <a href="{% url 'company' company.id %}"><h2 class="h2 pb-2">{{ company.name }}</h2></a>
+                    <p class="mb-2 ">{{ company.location }} • {{ company.employee_count }} сотрудников</p>
+                    <a href="{% url 'company' company.id %}"><p>{{ company.vacancies.count }} вакансий</p></a>
                 </div>
               </div>
             </div>

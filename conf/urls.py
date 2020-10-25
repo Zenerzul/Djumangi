@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from job_offer.views import MainView, AllVacanciesView, VacancyView, VacancyBySpecialisationView, CompanyView, \
     AllCompaniesView
@@ -13,3 +15,5 @@ urlpatterns = [
     path('vacancies/<int:vacancy_id>', VacancyView.as_view(), name='vacancy'),
     path('companies/', AllCompaniesView.as_view(), name='all_companies'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

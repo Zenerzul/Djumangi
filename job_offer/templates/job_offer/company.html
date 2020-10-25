@@ -8,25 +8,25 @@
 
     <section>
       <div class="text-center">
-        <img src="..{{ company_data.logo }}" width="130" height="80" alt="">
+        <img src="..{{ company.logo.url }}" width="130" height="80" alt="">
       </div>
-      <h1 class="h1 text-center mx-auto mt-0 pt-1" style="font-size: 70px;"><strong>{{ company_data.name }}</strong></h1>
-      <p class="text-center pt-1">Компания, {{ company_data.vacancies.count }} вакансий</p>
+      <h1 class="h1 text-center mx-auto mt-0 pt-1" style="font-size: 70px;"><strong>{{ company.name }}</strong></h1>
+      <p class="text-center pt-1">Компания, {{ company.vacancies.count }} вакансий</p>
       <div class="row mt-5">
         <div class="col-12 col-lg-8 offset-lg-2 m-auto">
 
-          {% for vacancy_data in company_data.vacancies.all %}
+          {% for vacancy in company.vacancies.all %}
           <div class="card mb-4">
             <div class="card-body px-4">
               <div class="row">
                 <div class="col-12 col-md-8 col-lg-9">
-                  <a href="{% url 'vacancy' vacancy_data.id %}"><h2 class="h2 pb-2">{{ vacancy_data.title }}</h2></a>
-                  <p class="mb-2">{{ vacancy_data.cat.title }} • {{ vacancy_data.skills }}</p>
-                  <p>От {{ vacancy_data.salary_from }} руб до {{ vacancy_data.salary_to }} руб.</p>
-                  <p class="text-muted pt-1">{{ vacancy_data.posted }}</p>
+                  <a href="{% url 'vacancy' vacancy.id %}"><h2 class="h2 pb-2">{{ vacancy.title }}</h2></a>
+                  <p class="mb-2">{{ vacancy.cat.title }} • {{ vacancy.skills }}</p>
+                  <p>От {{ vacancy.salary_from }} руб до {{ vacancy.salary_to }} руб.</p>
+                  <p class="text-muted pt-1">{{ vacancy.posted }}</p>
                 </div>
                 <div class="col-12 col-md-4 col-lg-3 d-flex align-items-end">
-                  <a href="{% url 'company' vacancy_data.company.id %}"><img src="{{ vacancy_data.company.logo }}" width="130" height="80" alt=""></a>
+                  <a href="{% url 'vacancy_by_specialisation' vacancy.cat.code %}"><img src="{{ vacancy.cat.picture.url }}" width="69" height="69" alt=""></a>
                 </div>
               </div>
             </div>

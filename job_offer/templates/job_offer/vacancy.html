@@ -10,16 +10,16 @@
       </div>
       <div class="col-12 col-lg-8">
         <section class="pl-3">
-          <a href="{% url 'company' vacancy_data.company.id %}"><img src="{{ vacancy_data.company.logo }}" width="130" height="80" alt=""></a>
+          <a href="{% url 'company' vacancy.company.id %}"><img src="{{ vacancy.company.logo.url }}" width="130" height="80" alt=""></a>
           <div class="d-flex align-items-baseline align-content-baseline">
-            <h1 class="h2 mt-4 font-weight-bold" >{{ vacancy_data.title }}</h1>
-            <p class="m-0 pl-3">{{ vacancy_data.salary_from }} - {{ vacancy_data.salary_to }}Р</p>
+            <h1 class="h2 mt-4 font-weight-bold" >{{ vacancy.title }}</h1>
+            <p class="m-0 pl-3">{{ vacancy.salary_from }} - {{ vacancy.salary_to }}Р</p>
           </div>
-          <p class="mt-2">{{ vacancy_data.cat.title }} • {{ vacancy_data.skills }}</p>
-          <p class="text-muted mb-4">{{ vacancy_data.company.name }} ({{ vacancy_data.company.employee_count }} человек)<br/>
-            {{ vacancy_data.company.location }} или удаленно</p>
+          <p class="mt-2">{{ vacancy.cat.title }} • {{ vacancy.skills }}</p>
+          <p class="text-muted mb-4">{{ vacancy.company.name }} ({{ vacancy.company.employee_count }} человек)<br/>
+            {{ vacancy.company.location }} или удаленно</p>
           <div style="line-height: 1.8;">
-            <p>{{ vacancy_data.desc }}</p>
+            <p>{{ vacancy.desc }}</p>
             <p><b>Мы предлагаем: </b><br>
               Оформление по ТК РФ<br>
               ДМС со стоматологией<br>

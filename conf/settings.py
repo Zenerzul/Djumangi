@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = '7ld4d76d81ejom8#+5jnzs4*a@xng!$&ndp@1ugim-!01lx14q'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -83,4 +83,11 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'job_offer/static')
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_COMPANY_IMAGE_DIR = 'company_logos'
+
+MEDIA_SPECIALITY_IMAGE_DIR = 'specialities_icons'
