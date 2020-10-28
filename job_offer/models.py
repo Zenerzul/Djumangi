@@ -1,8 +1,12 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
 
 from conf.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
 
+
+class User(User):
+    pass
 
 class Company(models.Model):
     name = models.CharField(max_length=32)
@@ -10,7 +14,8 @@ class Company(models.Model):
     logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR, blank=True)
     description = models.CharField(max_length=100)
     employee_count = models.IntegerField()
-    owner = models.ForeignKey(get_user_model(), related_name='company', on_delete=models.CASCADE, blank=True, null=True)
+    owner = models.OneToOneField(get_user_model(), related_name='company', on_delete=models.PROTECT,
+                                 blank=True, null=True)
 
     def __str__(self):
         return f'name={self.name}'

@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'job_offer',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -91,3 +92,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_COMPANY_IMAGE_DIR = 'company_logos'
 
 MEDIA_SPECIALITY_IMAGE_DIR = 'specialities_icons'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
