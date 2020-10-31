@@ -9,7 +9,7 @@ from django.views import View
 from django.views.generic import CreateView
 from django.views.decorators.http import require_POST
 
-from job_offer.forms import MyUserCreationForm, ApplicationForm
+from job_offer.forms import MyUserCreationForm, ApplicationForm, MyCompanyForm, MyVacancyForm
 from job_offer.models import Specialty, Company, Vacancy, Application
 
 
@@ -72,12 +72,13 @@ class VacancyView(View):
         form = ApplicationForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            application = Application.objects.create(written_username=form_data['written_username'],
-                                                     written_phone=form_data['written_phone'],
-                                                     written_cover_letter=form_data['written_cover_letter'],
-                                                     vacancy=vacancy,
-                                                     user=User.objects.get(username=request.user)
-                                                     )
+            application = Application.objects.create(
+                written_username=form_data['written_username'],
+                written_phone=form_data['written_phone'],
+                written_cover_letter=form_data['written_cover_letter'],
+                vacancy=vacancy,
+                user=User.objects.get(username=request.user)
+            )
             return redirect('send', vacancy_id)
         return render(request, 'job_offer/vacancy.html', {'form': form.errors})
 
@@ -102,36 +103,81 @@ class CompanyView(View):
 
 class MyCompanyView(View):
     def get(self, request):
-        return render(request, 'job_offer/company.html')
-        # try:
-        #     my_company = Company.objects.get(id=company_id)
-        # except Company.DoesNotExist:
-        #     raise Http404
-        # return render(request, 'job_offer/company.html')
-        # context={
-        #     'company': my_company,
-        # })
+        try:
+            Company.objects.get(owner=request.user)
+            return render(request, 'job_offer/company-edit.html', {'form': MyCompanyForm})
+        except Company.DoesNotExist:
+            Company.objects.create(
+                name='i',
+                logo='',
+                employee_count=0,
+                location='00',
+                description='',
+                owner=request.user
+            )
+            return render(request, 'job_offer/company-create.html')
+
+    def post(self, request):
+        form = MyCompanyForm(request.POST)
+        mycompany = Company.objects.get(owner=request.user)
+        mycompany.delete()
+        if form.is_valid():
+            form_data = form.cleaned_data
+            mycompany = Company.objects.create(
+                name=form_data['name'],
+                logo='/static/random_logo.png',
+                employee_count=form_data['employee_count'],
+                location=form_data['location'],
+                description=form_data['description'],
+                owner=request.user
+            )
+            return redirect('mycompany')
+        return render(request, 'job_offer/company-edit.html', {'form': form.errors})
 
 
 class MyCompanyVacanciesView(View):
     def get(self, request):
-        my_company_vacancies = Vacancy.objects.all()
-        header = 'Наши вакансии'
-        return render(request, 'job_offer/vacancies.html', context={
-            'vacancies': my_company_vacancies,
-            'header': header
+        mycompany_vacancies = Vacancy.objects.filter(company=Company.objects.get(owner=request.user))
+        if mycompany_vacancies.count() == 0:
+            vacancy = Vacancy.objects.create(company=Company.objects.get(owner=request.user),
+                                         salary_from=0, salary_to=10000)
+            return render(request, 'job_offer/vacancy-list.html', context={
+                'mycompany_vacancies': mycompany_vacancies,
+                'vacancy': vacancy,
+            })
+        return render(request, 'job_offer/vacancy-list.html', context={
+            'mycompany_vacancies': mycompany_vacancies,
         })
+
+
+    def post(self, request, mycompany_vacancies):
+        if mycompany_vacancies.count() == 0:
+            Vacancy.objects.create(company=Company.objects.get(owner=request.user), salary_from=0, salary_to=10000)
+        return redirect('mycompany_all_vacancies')
 
 
 class MyCompanySingleVacancyView(View):
     def get(self, request, vacancy_id):
-        try:
-            my_vacancy = Vacancy.objects.get(id=vacancy_id)
-        except Vacancy.DoesNotExist:
-            raise Http404
-        return render(request, 'job_offer/vacancy.html', context={
-            'vacancy': my_vacancy,
-        })
+        return render(request, 'job_offer/vacancy-edit.html', {'vacancy_id': vacancy_id, 'form': MyVacancyForm})
+
+
+    def post(self, request, vacancy_id):
+        vacancy = Vacancy.objects.get(id=vacancy_id)
+        vacancy.delete()
+        form = MyVacancyForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            new_vacancy = Vacancy.objects.create(
+                title=form_data['title'],
+                cat=form_data['cat'],
+                company=Company.objects.get(owner=request.user),
+                skills=form_data['skills'],
+                salary_from=form_data['salary_from'],
+                salary_to=form_data['salary_to'],
+                published=form_data['published']
+            )
+            return redirect('mycompany_all_vacancies')
+        return render(request, 'job_offer/vacancy-edit.html', {'form': form.errors})
 
 
 class MySignupView(CreateView):
@@ -143,30 +189,3 @@ class MySignupView(CreateView):
 class MyLoginView(LoginView):
     redirect_authenticated_user = True
     template_name = 'login_templates/login.html'
-
-
-    # def get(self, request):
-    #     return render(request, 'login_templates/register.html', {'form': UserRegisterForm})
-    #
-    # def post(self, request):
-    #     user_form = UserRegisterForm(request.POST)
-    #     if user_form.is_valid():
-    #         user = user_form.save()
-    #         user.set_password(user.password)
-    #         user.save()
-    #         return redirect('/')
-    #     return render(request, 'login_templates/register.html', {'form': user_form.errors})
-
-
-    # def get(self, request):
-    #     return render(request, 'login_templates/login.html', {'form': UserLoginForm})
-    #
-    # def post(self, request):
-    #     form = UserLoginForm(request.POST)
-    #     if form.is_valid():
-    #         authenticate(
-    #             username=form.cleaned_data['username'],
-    #             password=form.cleaned_data['password'],
-    #         )
-    #         return redirect('/')
-    #     return render(request, 'login_templates/login.html', {'form': form.errors})

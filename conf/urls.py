@@ -25,10 +25,10 @@ urlpatterns = [
     path('companies/<int:company_id>', CompanyView.as_view(), name='company'),
     path('companies/', AllCompaniesView.as_view(), name='all_companies'),
 
-    path('mycompany/', MyCompanyView.as_view(), name='my company'),
-    path('mycompany/vacancies', MyCompanyVacanciesView.as_view(), name='my company all vacancies'),
+    path('mycompany/', MyCompanyView.as_view(), name='mycompany'),
+    path('mycompany/vacancies', MyCompanyVacanciesView.as_view(), name='mycompany_all_vacancies'),
     path('mycompany/vacancies/<int:vacancy_id>', MyCompanySingleVacancyView.as_view(),
-         name='my company single vacancy'),
+         name='mycompany_vacancy'),
 ]
 
 

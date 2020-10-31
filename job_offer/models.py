@@ -8,6 +8,7 @@ from conf.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
 class User(User):
     pass
 
+
 class Company(models.Model):
     name = models.CharField(max_length=32)
     location = models.CharField(max_length=32)
@@ -32,13 +33,13 @@ class Specialty(models.Model):
 
 class Vacancy(models.Model):
     title = models.CharField(max_length=64)
-    cat = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name='vacancies')
+    cat = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name='vacancies', null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='vacancies')
     skills = models.CharField(max_length=64)
     desc = models.CharField(max_length=32)
     salary_from = models.IntegerField()
     salary_to = models.IntegerField()
-    posted = models.DateField(max_length=32)
+    posted = models.DateField(max_length=32, null=True)
 
 
 class Application(models.Model):

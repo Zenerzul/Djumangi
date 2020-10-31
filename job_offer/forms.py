@@ -3,7 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from job_offer.models import Application
+from job_offer.models import Application, Company, Vacancy
 
 
 class MyUserCreationForm(UserCreationForm):
@@ -38,4 +38,37 @@ class ApplicationForm(forms.ModelForm):
             'written_username': 'Вас зовут:',
             'written_phone': 'Ваш телефон:',
             'written_cover_letter': 'Сопроводительное письмо:',
+        }
+
+    fields_order = {
+        'written_username',
+        'written_phone',
+        'written_cover_letter',
+        }
+
+
+class MyCompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = {'name', 'logo', 'employee_count', 'location', 'description'}
+        labels = {
+            'name': 'Название компании',
+            'logo': 'Логотип',
+            'employee_count': 'Количество сотрудников',
+            'location': 'География',
+            'description': 'Информация о компании'
+        }
+
+
+class MyVacancyForm(forms.ModelForm):
+    class Meta:
+        model = Vacancy
+        fields = {'title', 'cat', 'skills', 'salary_from', 'salary_to', 'posted'}
+        labels = {
+            'title': 'Название вакансии',
+            'cat': 'Специализация',
+            'skills': 'Требуемые навыки',
+            'salary_from': 'Зарплата от',
+            'salary_to': 'Зарплата до',
+            'posted': 'Опубликовано'
         }
