@@ -1,13 +1,9 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
-from django.views.decorators.http import require_POST
 
 from job_offer.forms import MyUserCreationForm, ApplicationForm, MyCompanyForm, MyVacancyForm
 from job_offer.models import Specialty, Company, Vacancy, Application
@@ -72,7 +68,7 @@ class VacancyView(View):
         form = ApplicationForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            application = Application.objects.create(
+            Application.objects.create(
                 written_username=form_data['written_username'],
                 written_phone=form_data['written_phone'],
                 written_cover_letter=form_data['written_cover_letter'],
@@ -123,7 +119,7 @@ class MyCompanyView(View):
         mycompany.delete()
         if form.is_valid():
             form_data = form.cleaned_data
-            mycompany = Company.objects.create(
+            Company.objects.create(
                 name=form_data['name'],
                 logo='/static/random_logo.png',
                 employee_count=form_data['employee_count'],
@@ -151,16 +147,15 @@ class MyCompanyCreateVacancyView(View):
         form = MyVacancyForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            vacancy = Vacancy.objects.create(
+            Vacancy.objects.create(
                 title=form_data['title'],
-                cat=Specialty.objects.get(code=form_data['cat']),
+                cat=form_data['cat'],
                 company=Company.objects.get(owner=request.user),
                 skills=form_data['skills'],
                 desc=form_data['desc'],
                 salary_from=form_data['salary_from'],
                 salary_to=form_data['salary_to'],
                 posted=form_data['posted'],
-
             )
             return redirect('mycompany_all_vacancies')
         return render(request, 'job_offer/vacancy-edit.html', {'form': form.errors})
@@ -170,21 +165,21 @@ class MyCompanySingleVacancyView(View):
     def get(self, request, vacancy_id):
         return render(request, 'job_offer/vacancy-edit.html', {'vacancy_id': vacancy_id, 'form': MyVacancyForm})
 
-
     def post(self, request, vacancy_id):
         vacancy = Vacancy.objects.get(id=vacancy_id)
         vacancy.delete()
         form = MyVacancyForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            new_vacancy = Vacancy.objects.create(
+            Vacancy.objects.create(
                 title=form_data['title'],
                 cat=form_data['cat'],
                 company=Company.objects.get(owner=request.user),
                 skills=form_data['skills'],
                 salary_from=form_data['salary_from'],
                 salary_to=form_data['salary_to'],
-                published=form_data['published']
+                desc=form_data['desc'],
+                posted=form_data['posted'],
             )
             return redirect('mycompany_all_vacancies')
         return render(request, 'job_offer/vacancy-edit.html', {'form': form.errors})

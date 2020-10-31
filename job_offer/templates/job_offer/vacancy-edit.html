@@ -17,14 +17,15 @@
         <div class="card-body px-4 pb-4 tab-content">
           <!-- Tab -->
           <section>
+
             <form method="post">{% csrf_token %}
                 {{ form.as_p }}
-<!--                {% if widget.value != None %}-->
-<!--                value="{{ widget.value|stringformat:'s' }}"-->
-<!--                {% endif %}-->
-<!--                <input type="submit" class="btn btn-info" value="Сохранить">-->
-                <button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Сохранить</button>
+                {% if widget.value != None %}
+                value="{{ widget.value|stringformat:'s' }}"
+                {% endif %}
+                <input type="submit" class="btn btn-info" value="Сохранить">
               </form>
+
           </section>
           <!-- END Tab -->
         </div>
@@ -32,4 +33,5 @@
     </div>
   </div>
 </main>
+
 {% endblock %}

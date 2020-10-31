@@ -63,12 +63,13 @@ class MyCompanyForm(forms.ModelForm):
 class MyVacancyForm(forms.ModelForm):
     class Meta:
         model = Vacancy
-        fields = {'title', 'cat', 'skills', 'salary_from', 'salary_to', 'posted'}
+        fields = {'title', 'cat', 'skills', 'salary_from', 'salary_to', 'posted', 'desc'}
         labels = {
             'title': 'Название вакансии',
             'cat': 'Специализация',
             'skills': 'Требуемые навыки',
             'salary_from': 'Зарплата от',
             'salary_to': 'Зарплата до',
-            'posted': 'Опубликовано'
+            'posted': 'Опубликовано',
+            'desc': 'Описание вакансии'
         }
