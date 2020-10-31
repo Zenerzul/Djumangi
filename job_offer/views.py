@@ -121,7 +121,7 @@ class MyCompanyView(View):
             form_data = form.cleaned_data
             Company.objects.create(
                 name=form_data['name'],
-                logo='/static/random_logo.png',
+                logo='random_logo.png',
                 employee_count=form_data['employee_count'],
                 location=form_data['location'],
                 description=form_data['description'],
