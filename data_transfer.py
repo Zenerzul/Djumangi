@@ -1,14 +1,13 @@
 #!/usr/bin/env python
-import datetime
 import os
 import django
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'conf.settings'
-django.setup()
-
-
 from job_offer.data import vacancies, companies, specialties
 from job_offer.models import Company, Vacancy, Specialty
+
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'conf.settings'
+django.setup()
 
 
 if __name__ == '__main__':
