@@ -24,14 +24,10 @@
             <p class="alert alert-info" role="alert">
               У вас пока нет вакансий, но вы можете создать первую!
             </p>
-            <a href="{% url 'mycompany_vacancy' vacancy.id %}" style="text-decoration:none">
+            <a href="{% url 'create_vacancy' %}" style="text-decoration:none">
               <button class="btn btn-primary">Добавить вакансию</button>
             </a>
-            {% else %}
-
-            <a href="{% url 'mycompany_vacancy' vacancy.id %}" style="text-decoration:none">
-              <button class="btn btn-primary">Добавить вакансию</button>
-            </a>
+            {% endif %}
 
             {% for vacancy in mycompany_vacancies %}
             <div class="card mt-3">
@@ -50,7 +46,6 @@
               </div>
             </div>
             {% endfor %}
-            {% endif %}
           </section>
         </div>
       </div>

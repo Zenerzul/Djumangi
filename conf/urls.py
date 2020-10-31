@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 from job_offer.views import MainView, AllVacanciesView, VacancyView, VacancyBySpecialisationView, CompanyView, \
     AllCompaniesView, MySignupView, MyLoginView, MyCompanyView, MyCompanySingleVacancyView, \
-    MyCompanyVacanciesView, SentView
+    MyCompanyVacanciesView, SentView, MyCompanyCreateVacancyView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('mycompany/', MyCompanyView.as_view(), name='mycompany'),
     path('mycompany/vacancies', MyCompanyVacanciesView.as_view(), name='mycompany_all_vacancies'),
+    path('mycompany/vacancies/create_vacancy', MyCompanyCreateVacancyView.as_view(), name='create_vacancy'),
     path('mycompany/vacancies/<int:vacancy_id>', MyCompanySingleVacancyView.as_view(),
          name='mycompany_vacancy'),
 ]

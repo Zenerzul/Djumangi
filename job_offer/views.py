@@ -138,22 +138,32 @@ class MyCompanyView(View):
 class MyCompanyVacanciesView(View):
     def get(self, request):
         mycompany_vacancies = Vacancy.objects.filter(company=Company.objects.get(owner=request.user))
-        if mycompany_vacancies.count() == 0:
-            vacancy = Vacancy.objects.create(company=Company.objects.get(owner=request.user),
-                                         salary_from=0, salary_to=10000)
-            return render(request, 'job_offer/vacancy-list.html', context={
-                'mycompany_vacancies': mycompany_vacancies,
-                'vacancy': vacancy,
-            })
         return render(request, 'job_offer/vacancy-list.html', context={
             'mycompany_vacancies': mycompany_vacancies,
         })
 
 
-    def post(self, request, mycompany_vacancies):
-        if mycompany_vacancies.count() == 0:
-            Vacancy.objects.create(company=Company.objects.get(owner=request.user), salary_from=0, salary_to=10000)
-        return redirect('mycompany_all_vacancies')
+class MyCompanyCreateVacancyView(View):
+    def get(self, request):
+        return render(request, 'job_offer/vacancy-edit.html', {'form': MyVacancyForm})
+
+    def post(self, request):
+        form = MyVacancyForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            vacancy = Vacancy.objects.create(
+                title=form_data['name'],
+                company=Company.objects.get(owner=request.user),
+                cat=Specialty.objects.get(code=form_data['cat']),
+                salary_from=form_data['salary_from'],
+                salary_to=form_data['salary_to'],
+                published=form_data['published'],
+                skills=form_data['skills'],
+                desc=form_data['desc']
+            )
+            vacancy.save()
+            return redirect('/')
+        return render(request, 'job_offer/vacancy-edit.html', {'form': form.errors})
 
 
 class MyCompanySingleVacancyView(View):
