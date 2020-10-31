@@ -47,26 +47,41 @@
               Опыт работы в команде по Scrum
             </p>
           </div>
-          <form action="/echo" class="card mt-4 mb-3">
-            <div class="card-body mx-3">
-              <p class="h5 mt-3 font-weight-normal">Отозваться на вакансию</p>
-              <div class="form-group">
-                <label class="mb-1 mt-2" for="userName">Вас зовут</label>
-                <input class="form-control" type="text" placeholder="" id="userName">
-              </div>
-              <div class="form-group">
-                <label class="mb-1" for="userPhone">Ваш телефон</label>
-                <input class="form-control" type="tel" placeholder="" id="userPhone">
-              </div>
-              <div class="form-group">
-                <label class="mb-1" for="userMsg" >Сопроводительное письмо</label>
-                <textarea class="form-control" rows="8" id="userMsg"></textarea>
-              </div>
-              <div class="btn btn-primary mt-4 mb-2">
-                <a href="#">Записаться на пробный урок</a>
-              </div>
-            </div>
+          {% if user.is_authenticated %}
+          <form method="post">{% csrf_token %}
+              {% for field in form %}
+              <p>{{ field.label }}</p>
+              <p>{{ field }}</p>
+              {% endfor %}
+              <button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Отправить отклик</button>
           </form>
+
+
+<!--            <form action="/echo" class="card mt-4 mb-3">-->
+<!--              <div class="card-body mx-3">-->
+<!--                <p class="h5 mt-3 font-weight-normal">Отозваться на вакансию</p>-->
+<!--                <div class="form-group">-->
+<!--                  <label class="mb-1 mt-2" for="userName">Вас зовут</label>-->
+<!--                  <input class="form-control" type="text" placeholder="" id="userName">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                  <label class="mb-1" for="userPhone">Ваш телефон</label>-->
+<!--                  <input class="form-control" type="tel" placeholder="" id="userPhone">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                  <label class="mb-1" for="userMsg" >Сопроводительное письмо</label>-->
+<!--                  <textarea class="form-control" rows="8" id="userMsg"></textarea>-->
+<!--                </div>-->
+<!--                <div class="btn btn-primary mt-4 mb-2">-->
+<!--                  <a href="#">Записаться на пробный урок</a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </form>-->
+
+          {% else %}
+          <p class="mt-4">Чтобы откликнуться на вакансию, <a href="{% url 'register' %}">зарегистрируйтесь</a>
+            или <a href="{% url 'login' %}">войдите</a> в свой личный кабинет.</p>
+          {% endif %}
         </section>
       </div>
     </div>

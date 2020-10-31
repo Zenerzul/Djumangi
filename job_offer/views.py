@@ -8,9 +8,9 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
 from django.views.decorators.http import require_POST
-# from job_offer.forms import UserRegisterForm
-from job_offer.forms import UserRegisterForm, UserLoginForm
-from job_offer.models import Specialty, Company, Vacancy
+
+from job_offer.forms import MyUserCreationForm, ApplicationForm
+from job_offer.models import Specialty, Company, Vacancy, Application
 
 
 class MainView(View):
@@ -26,7 +26,7 @@ class MainView(View):
 class AllVacanciesView(View):
     def get(self, request):
         all_vacancies = Vacancy.objects.all()
-        header = 'Все вакансии'
+        header = 'Вакансии'
         return render(request, 'job_offer/vacancies.html', context={
             'vacancies': all_vacancies,
             'header': header
@@ -64,6 +64,28 @@ class VacancyView(View):
             raise Http404
         return render(request, 'job_offer/vacancy.html', context={
             'vacancy': vacancy,
+            'form': ApplicationForm
+        })
+
+    def post(self, request, vacancy_id):
+        vacancy = Vacancy.objects.get(id=vacancy_id)
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            application = Application.objects.create(written_username=form_data['written_username'],
+                                                     written_phone=form_data['written_phone'],
+                                                     written_cover_letter=form_data['written_cover_letter'],
+                                                     vacancy=vacancy,
+                                                     user=User.objects.get(username=request.user)
+                                                     )
+            return redirect('send', vacancy_id)
+        return render(request, 'job_offer/vacancy.html', {'form': form.errors})
+
+
+class SentView(View):
+    def get(self, request, vacancy_id):
+        return render(request, 'job_offer/sent.html', context={
+            'vacancy_id': vacancy_id,
         })
 
 
@@ -112,33 +134,39 @@ class MyCompanySingleVacancyView(View):
         })
 
 
-class MySignupView(View):
-    def get(self, request):
-        return render(request, 'login_templates/register.html', {'form': UserRegisterForm})
-
-    def post(self, request):
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            User.objects.create(
-                username=form.cleaned_data['username'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                password=form.cleaned_data['password']
-            )
-            return redirect('/')
-        return render(request, 'login_templates/register.html', {'form': form.errors})
+class MySignupView(CreateView):
+    form_class = MyUserCreationForm
+    success_url = 'login'
+    template_name = 'login_templates/register.html'
 
 
-class MyLoginView(View):
-    def get(self, request):
-        return render(request, 'login_templates/login.html', {'form': UserLoginForm})
+class MyLoginView(LoginView):
+    redirect_authenticated_user = True
+    template_name = 'login_templates/login.html'
 
-    def post(self, request):
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-            )
-            return redirect('/')
-        return render(request, 'login_templates/login.html', {'form': form.errors})
+
+    # def get(self, request):
+    #     return render(request, 'login_templates/register.html', {'form': UserRegisterForm})
+    #
+    # def post(self, request):
+    #     user_form = UserRegisterForm(request.POST)
+    #     if user_form.is_valid():
+    #         user = user_form.save()
+    #         user.set_password(user.password)
+    #         user.save()
+    #         return redirect('/')
+    #     return render(request, 'login_templates/register.html', {'form': user_form.errors})
+
+
+    # def get(self, request):
+    #     return render(request, 'login_templates/login.html', {'form': UserLoginForm})
+    #
+    # def post(self, request):
+    #     form = UserLoginForm(request.POST)
+    #     if form.is_valid():
+    #         authenticate(
+    #             username=form.cleaned_data['username'],
+    #             password=form.cleaned_data['password'],
+    #         )
+    #         return redirect('/')
+    #     return render(request, 'login_templates/login.html', {'form': form.errors})

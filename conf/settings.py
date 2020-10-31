@@ -36,7 +36,7 @@ ROOT_URLCONF = 'conf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates/job_offer'],
+        'DIRS': ['templates/job_offer', 'templates/login_templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -93,6 +93,6 @@ MEDIA_COMPANY_IMAGE_DIR = 'company_logos'
 
 MEDIA_SPECIALITY_IMAGE_DIR = 'specialities_icons'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'main'
 
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'main'

@@ -33,7 +33,7 @@
           </li>
         </ul>
 
-        {% if user.is_authenticated == True %}
+        {% if user.is_authenticated %}
           <ul class="navbar-nav col-2 justify-content-end">
             <li class="nav-item active">
               <div class="btn-group">
@@ -50,9 +50,14 @@
             </li>
           </ul>
         {% else %}
-          <div class="container justify-content-end">
+          <ul class="navbar-nav col-2 justify-content-end">
+            <li class="nav-item">
+              <a href="{% url 'register' %}" class="nav-link text-dark py-2">Зарегистрироваться</a>
+            </li>
+            <li class="nav-item">
               <a href="{% url 'login' %}" class="nav-link text-dark py-2">Войти</a>
-          </div>
+            </li>
+          </ul>
         {% endif %}
       </div>
     </nav>
