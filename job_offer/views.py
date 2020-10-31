@@ -152,17 +152,17 @@ class MyCompanyCreateVacancyView(View):
         if form.is_valid():
             form_data = form.cleaned_data
             vacancy = Vacancy.objects.create(
-                title=form_data['name'],
-                company=Company.objects.get(owner=request.user),
+                title=form_data['title'],
                 cat=Specialty.objects.get(code=form_data['cat']),
+                company=Company.objects.get(owner=request.user),
+                skills=form_data['skills'],
+                desc=form_data['desc'],
                 salary_from=form_data['salary_from'],
                 salary_to=form_data['salary_to'],
-                published=form_data['published'],
-                skills=form_data['skills'],
-                desc=form_data['desc']
+                posted=form_data['posted'],
+
             )
-            vacancy.save()
-            return redirect('/')
+            return redirect('mycompany_all_vacancies')
         return render(request, 'job_offer/vacancy-edit.html', {'form': form.errors})
 
 
