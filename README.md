@@ -18,4 +18,3 @@ Enjoy!
 TODO-list:
 - correct output of registration errors
 - proper company and vacancy editing algoritm
-- правильное редактирование уже сохраненных форм (отображение старой информации)
